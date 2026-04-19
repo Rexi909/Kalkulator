@@ -1,0 +1,595 @@
+/* =============================================
+   KALKULATOR PINTAR - style.css
+   Rico, Khosyi, Andy - Sistem Informasi
+   ============================================= */
+
+/* --- CSS VARIABLES (MODE GELAP DEFAULT) --- */
+:root {
+  --primary: #6c5ce7;
+  --accent: #00cec9;
+  --error: #ff4757;
+  --glass: rgba(255, 255, 255, 0.1);
+
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.6);
+  --text-sub: rgba(255, 255, 255, 0.5);
+
+  --body-bg-1: #0f0c29;
+  --body-bg-2: #1a1a2e;
+
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --display-bg: rgba(0, 0, 0, 0.3);
+
+  --op-btn-bg: rgba(255, 255, 255, 0.1);
+  --op-btn-color: #ffffff;
+  --op-icon-color: #ffffff;
+  --op-btn-hover-bg: #6c5ce7;
+  --op-btn-hover-icon: #ffffff;
+
+  --symbol-color: #00cec9;
+
+  --riwayat-item-bg: rgba(255, 255, 255, 0.05);
+
+  --panel-bg: rgba(10, 10, 30, 0.97);
+  --panel-border: #00cec9;
+  --saved-item-bg: rgba(255, 255, 255, 0.08);
+  --saved-item-color: #ffffff;
+
+  --badge-bg: #1a2a4a;
+  --badge-color: #ffffff;
+  --badge-border: rgba(255, 255, 255, 0.15);
+}
+
+/* --- CSS VARIABLES (MODE TERANG) --- */
+body.light-mode {
+  --primary: #0277bd;
+  --accent: #0288d1;
+  --glass: rgba(0, 0, 0, 0.08);
+
+  --text-main: #111111;
+  --text-muted: rgba(0, 0, 0, 0.55);
+  --text-sub: rgba(0, 0, 0, 0.45);
+
+  --body-bg-1: #a8d8ea;
+  --body-bg-2: #79c1dc;
+
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-border: rgba(2, 119, 189, 0.3);
+  --display-bg: rgba(1, 87, 155, 0.08);
+
+  --op-btn-bg: rgba(2, 119, 189, 0.12);
+  --op-btn-color: #111111;
+  --op-icon-color: #111111;
+  --op-btn-hover-bg: #f9a825;
+  --op-btn-hover-icon: #ffffff;
+
+  --symbol-color: #0277bd;
+
+  --riwayat-item-bg: rgba(2, 119, 189, 0.08);
+
+  --panel-bg: rgba(200, 235, 250, 0.98);
+  --panel-border: #0277bd;
+  --saved-item-bg: rgba(2, 119, 189, 0.12);
+  --saved-item-color: #111111;
+
+  --badge-bg: #0277bd;
+  --badge-color: #ffffff;
+  --badge-border: rgba(2, 119, 189, 0.4);
+}
+
+/* --- RESET --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* --- BODY --- */
+body {
+  background: linear-gradient(135deg, var(--body-bg-1), var(--body-bg-2), var(--body-bg-1));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+  transition: background 0.4s ease;
+}
+
+/* =============================================
+   LOADING SCREEN
+   ============================================= */
+#loading-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #0f0c29;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+.loader-content { text-align: center; }
+.cyber-spinner {
+  width: 80px; height: 80px;
+  border: 4px solid transparent;
+  border-top: 4px solid #00cec9;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+  position: relative;
+}
+.cyber-spinner::before {
+  content: '';
+  position: absolute;
+  top: 5px; left: 5px; right: 5px; bottom: 5px;
+  border: 4px solid transparent;
+  border-top: 4px solid #6c5ce7;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+.loading-text { margin-bottom: 10px; }
+.letter {
+  display: inline-block;
+  color: white;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+  animation: bounce 1.2s infinite;
+}
+.letter:nth-child(2) { animation-delay: 0.1s; }
+.letter:nth-child(3) { animation-delay: 0.2s; }
+.letter:nth-child(4) { animation-delay: 0.3s; }
+.letter:nth-child(5) { animation-delay: 0.4s; }
+.letter:nth-child(6) { animation-delay: 0.5s; }
+.letter:nth-child(7) { animation-delay: 0.6s; }
+.loading-sub { color: #00cec9; font-size: 0.85rem; }
+.loader-hidden { opacity: 0; visibility: hidden; }
+
+/* =============================================
+   THEME TOGGLE BUTTON
+   ============================================= */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 200;
+  background: var(--glass);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.theme-toggle:hover {
+  transform: scale(1.15);
+  background: var(--accent);
+  color: #fff;
+}
+
+/* =============================================
+   MODAL CUSTOM
+   ============================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+.modal-overlay.show { visibility: visible; opacity: 1; }
+.modal-content {
+  background: var(--panel-bg);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid var(--accent);
+  transform: scale(0.7);
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.modal-overlay.show .modal-content { transform: scale(1); }
+.modal-icon { font-size: 3.5rem; color: var(--error); margin-bottom: 15px; }
+.modal-content h3 { color: var(--text-main); margin-bottom: 10px; }
+.modal-content p { color: var(--text-muted); margin-bottom: 25px; font-size: 0.9rem; }
+.modal-buttons { display: flex; gap: 10px; justify-content: center; }
+.modal-buttons button { height: 45px; padding: 0 20px; font-size: 0.9rem; font-weight: 600; border-radius: 10px; cursor: pointer; border: none; }
+.btn-modal-confirm { background: var(--error); color: white; }
+.btn-modal-cancel { background: var(--glass); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2) !important; }
+
+/* =============================================
+   FOLDER & STORAGE PANEL
+   ============================================= */
+.folder-history {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  font-size: 1.8rem;
+  color: var(--accent);
+  cursor: pointer;
+  z-index: 100;
+  transition: 0.3s;
+  filter: drop-shadow(0 0 8px rgba(0, 206, 201, 0.5));
+}
+.folder-history:hover {
+  transform: scale(1.2) rotate(-10deg);
+  color: var(--text-main);
+}
+.saved-panel {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100%;
+  background: var(--panel-bg);
+  backdrop-filter: blur(15px);
+  z-index: 999;
+  transition: 0.4s ease-in-out;
+  padding: 25px;
+  border-right: 2px solid var(--panel-border);
+}
+.saved-panel.active { left: 0; }
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-main);
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 10px;
+}
+.panel-header h3 { color: var(--text-main); }
+.close-panel {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 2rem;
+  cursor: pointer;
+  height: auto;
+  line-height: 1;
+}
+#daftarSaved li {
+  background: var(--saved-item-bg);
+  color: var(--saved-item-color);
+  font-weight: 500;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  border-left: 3px solid var(--accent);
+  list-style: none;
+}
+.btn-clear-all {
+  width: 100%;
+  margin-top: 20px;
+  background: rgba(255, 71, 87, 0.15);
+  color: var(--error);
+  font-size: 0.8rem;
+  height: 40px;
+  border: 1px solid var(--error);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-clear-all:hover { background: var(--error); color: white; }
+
+/* =============================================
+   NOTIFIKASI
+   ============================================= */
+#custom-notification {
+  position: fixed;
+  top: 20px;
+  right: 80px;
+  padding: 13px 22px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  z-index: 3000;
+  transform: translateX(200%);
+  transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.notif-show { transform: translateX(0) !important; }
+.notif-success { background: var(--accent); box-shadow: 0 10px 20px rgba(0, 206, 201, 0.3); }
+.notif-error { background: var(--error); box-shadow: 0 10px 20px rgba(255, 71, 87, 0.3); }
+
+/* =============================================
+   HEADER
+   ============================================= */
+.header-wrapper {
+  text-align: center;
+  /* Beri ruang atas agar tidak tertutup tombol tema */
+  margin-top: 80px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  width: 100%;
+}
+.rgb-text {
+  font-size: 2.2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rgb-text i {
+  color: var(--accent);
+  filter: drop-shadow(0 0 10px var(--accent));
+  flex-shrink: 0;
+}
+.rgb-text span {
+  background: linear-gradient(to right, #00cec9, #6c5ce7, #ff7f50, #00cec9);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: flowRGB 3s linear infinite;
+}
+@keyframes flowRGB { to { background-position: 200% center; } }
+.sub-title {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  margin-top: 5px;
+}
+
+/* =============================================
+   MAIN & CARD
+   ============================================= */
+main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 15px;
+  flex: 1;
+}
+.kalkulator-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  width: 100%;
+  max-width: 430px;
+  padding: 28px;
+  border-radius: 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  animation: floating 6s ease-in-out infinite;
+}
+@keyframes floating {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.display-container {
+  background: var(--display-bg);
+  border-radius: 20px;
+  padding: 22px;
+  margin-bottom: 22px;
+}
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+input[type="number"] {
+  width: 42%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--card-border);
+  color: var(--text-main);
+  font-size: 1.7rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s;
+}
+input[type="number"]:focus {
+  border-bottom-color: var(--accent);
+}
+input[type="number"]::placeholder {
+  color: var(--text-muted);
+}
+.operator-display {
+  color: var(--symbol-color);
+  font-weight: 800;
+  font-size: 1.8rem;
+  flex: 1;
+  text-align: center;
+}
+.hasil-box {
+  text-align: right;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.3rem;
+  margin-top: 18px;
+}
+.error-flash {
+  color: var(--error) !important;
+  text-shadow: 0 0 15px var(--error);
+}
+
+/* =============================================
+   BUTTON GRID
+   ============================================= */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+button {
+  height: 58px;
+  border: none;
+  border-radius: 15px;
+  background: var(--op-btn-bg);
+  color: var(--op-btn-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s, color 0.25s;
+}
+
+/* Ikon +, -, ×, ÷ warna hitam di gelap = putih, terang = hitam */
+.btn-op i {
+  color: var(--op-icon-color);
+  transition: color 0.25s;
+}
+
+/* Hover: background kuning (mode terang) / ungu (mode gelap), ikon putih */
+.btn-op:hover {
+  background: var(--op-btn-hover-bg);
+  transform: translateY(-3px);
+}
+.btn-op:hover i {
+  color: var(--op-btn-hover-icon);
+}
+
+/* Tombol reset */
+.btn-reset {
+  color: var(--error);
+  background: rgba(255, 71, 87, 0.1);
+}
+.btn-reset:hover {
+  background: var(--error);
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* =============================================
+   RIWAYAT
+   ============================================= */
+.riwayat-container {
+  margin-top: 22px;
+}
+.riwayat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.riwayat-label {
+  color: var(--text-main);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.riwayat-label i {
+  color: var(--accent);
+  margin-right: 4px;
+}
+.header-actions { display: flex; gap: 10px; }
+.btn-action-save {
+  background: none;
+  color: var(--accent);
+  font-size: 0.8rem;
+  border: 1px solid var(--accent);
+  padding: 5px 12px;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-action-save:hover { background: var(--accent); color: white; }
+.btn-action-delete {
+  background: none;
+  color: var(--error);
+  font-size: 0.8rem;
+  border: 1px solid var(--error);
+  padding: 5px 12px;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-action-delete:hover { background: var(--error); color: white; }
+#daftarRiwayat {
+  list-style: none;
+  max-height: 180px;
+  overflow-y: auto;
+}
+#daftarRiwayat li {
+  background: var(--riwayat-item-bg);
+  color: var(--text-main);
+  margin-bottom: 8px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#daftarRiwayat li i { color: var(--accent); }
+
+/* =============================================
+   FOOTER / BADGES
+   ============================================= */
+footer {
+  margin-top: 25px;
+  padding: 20px 15px;
+  width: 100%;
+}
+.team-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.badge {
+  background: var(--badge-bg);
+  color: var(--badge-color);
+  padding: 9px 16px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid var(--badge-border);
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.badge i { font-size: 0.7rem; }
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 480px) {
+  .rgb-text { font-size: 1.6rem; gap: 8px; }
+  .kalkulator-card { padding: 20px 16px; }
+  input[type="number"] { font-size: 1.3rem; }
+  .operator-display { font-size: 1.5rem; }
+  .hasil-box { font-size: 2rem; }
+  .saved-panel { width: 85%; }
+  .team-badges { flex-direction: column; align-items: center; }
+  .folder-history { top: 15px; left: 15px; font-size: 1.5rem; }
+  button { height: 52px; font-size: 1.1rem; }
+  .header-wrapper { margin-top: 70px; }
+}
+
+/* =============================================
+   KEYFRAMES
+   ============================================= */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); color: white; }
+  50% { transform: translateY(-10px); color: #00cec9; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
